@@ -1,7 +1,6 @@
 package com.devsuperior.dscommerce.entities;
 
 import jakarta.persistence.*;
-import org.w3c.dom.Text;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;

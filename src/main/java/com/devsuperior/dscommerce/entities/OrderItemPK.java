@@ -1,7 +1,6 @@
 package com.devsuperior.dscommerce.entities;
 
 import jakarta.persistence.Embeddable;
-import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
@@ -20,6 +19,7 @@ public class OrderItemPK {
     }
 
     public Order getOrder() {
+
         return order;
     }
 
@@ -28,10 +28,12 @@ public class OrderItemPK {
     }
 
     public Product getProduct() {
+
         return product;
     }
 
     public void setProduct(Product product) {
+
         this.product = product;
     }
 }
