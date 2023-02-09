@@ -1,6 +1,6 @@
 package com.devsuperior.dscommerce.entities;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 import java.time.Instant;
 import java.util.HashSet;
@@ -85,6 +85,6 @@ public class Order {
     }
 
     public List<Product> getProducts() {
-        return items.stream().map(x -> x.getProduct()).toList();
+        return items.stream().map(OrderItem::getProduct).toList();
     }
 }
