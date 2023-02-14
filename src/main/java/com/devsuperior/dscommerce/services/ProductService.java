@@ -19,18 +19,18 @@ import org.springframework.transaction.annotation.Transactional;
 public class ProductService {
 
     @Autowired
-    private ProductRepository repository;
+    private ProductRepository productRepository;
 
     @Transactional(readOnly = true)
     public ProductDTO findById(Long id) {
-        Product product = repository.findById(id).orElseThrow(
+        Product product = productRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Recurso não encontrado"));
         return  new ProductDTO(product);
     }
 
     @Transactional(readOnly = true)
     public Page<ProductDTO> findAll(String name, Pageable pageable) {
-        Page<Product> result = repository.searchByName(name, pageable);
+        Page<Product> result = productRepository.searchByName(name, pageable);
         return result.map(ProductDTO::new);
     }
 
@@ -38,16 +38,16 @@ public class ProductService {
     public ProductDTO insert(ProductDTO dto) {
         Product entity = new Product();
         copyDtoToEntity(dto, entity);
-        entity = repository.save(entity);
+        entity = productRepository.save(entity);
         return new ProductDTO(entity);
     }
 
     @Transactional
     public ProductDTO update(Long id, ProductDTO dto) {
         try {
-            Product entity = repository.getReferenceById(id);
+            Product entity = productRepository.getReferenceById(id);
             copyDtoToEntity(dto, entity);
-            entity = repository.save(entity);
+            entity = productRepository.save(entity);
             return new ProductDTO(entity);
         } catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException("Recurso não encontrado");
@@ -57,7 +57,7 @@ public class ProductService {
     @Transactional(propagation = Propagation.SUPPORTS)
     public void delete(Long id) {
         try {
-            repository.deleteById(id);
+            productRepository.deleteById(id);
         } catch (EmptyResultDataAccessException e) {
             throw new ResourceNotFoundException("Recurso não encontrado");
         } catch (DataIntegrityViolationException e) {
