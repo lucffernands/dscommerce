@@ -4,9 +4,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-
 import java.time.LocalDate;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_user")
@@ -24,7 +25,7 @@ public class User implements UserDetails {
     private String password;
 
     @OneToMany(mappedBy = "client")
-    private List<Order> orders = new ArrayList<>();
+    private Set<Order> orders = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "tb_user_role",
@@ -84,20 +85,12 @@ public class User implements UserDetails {
         this.birthDate = birthDate;
     }
 
+    public void setPassword(String password) { this.password = password;
+    }
+
+    @Override
     public String getPassword() {
         return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public List<Order> getOrders() {
-        return orders;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
     }
 
     @Override
